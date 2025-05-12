@@ -1,7 +1,5 @@
-// Загружаем пользователей при загрузке страницы
 document.addEventListener('DOMContentLoaded', loadUsers);
 
-// Функция загрузки пользователей
 async function loadUsers() {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
@@ -24,7 +22,7 @@ async function loadUsers() {
     }
 }
 
-// Функция загрузки альбомов
+
 async function loadAlbums(userId) {
     try {
         const response = await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`);
@@ -33,9 +31,8 @@ async function loadAlbums(userId) {
         }
         const albums = await response.json();
         const albumsDiv = document.getElementById('albums');
-        albumsDiv.innerHTML = ''; // Очищаем содержимое
+        albumsDiv.innerHTML = '';
 
-        // Кнопка "Назад к пользователям"
         const backButton = document.createElement('button');
         backButton.textContent = 'Назад к пользователям';
         backButton.addEventListener('click', () => {
@@ -45,15 +42,13 @@ async function loadAlbums(userId) {
         });
         albumsDiv.appendChild(backButton);
 
-        // Добавляем альбомы
         albums.forEach(album => {
             const albumElement = document.createElement('div');
             albumElement.textContent = album.title;
             albumElement.addEventListener('click', () => loadPhotos(album.id));
             albumsDiv.appendChild(albumElement);
         });
-
-        // Управляем видимостью
+        
         albumsDiv.style.display = 'block';
         document.getElementById('photos').style.display = 'none';
         document.getElementById('users').style.display = 'none';
@@ -64,7 +59,7 @@ async function loadAlbums(userId) {
     }
 }
 
-// Функция загрузки фотографий
+
 async function loadPhotos(albumId) {
     try {
         const response = await fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`);
@@ -73,9 +68,8 @@ async function loadPhotos(albumId) {
         }
         const photos = await response.json();
         const photosDiv = document.getElementById('photos');
-        photosDiv.innerHTML = ''; // Очищаем содержимое
+        photosDiv.innerHTML = ''; 
 
-        // Кнопка "Назад к альбомам"
         const backButton = document.createElement('button');
         backButton.textContent = 'Назад к альбомам';
         backButton.addEventListener('click', () => {
@@ -84,14 +78,12 @@ async function loadPhotos(albumId) {
         });
         photosDiv.appendChild(backButton);
 
-        // Добавляем фотографии
         photos.forEach(photo => {
             const photoElement = document.createElement('img');
             photoElement.src = photo.thumbnailUrl;
             photosDiv.appendChild(photoElement);
         });
 
-        // Управляем видимостью
         photosDiv.style.display = 'grid';
         document.getElementById('albums').style.display = 'none';
     } catch (error) {
